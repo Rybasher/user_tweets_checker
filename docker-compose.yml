@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  server:
+    build: ./server
+    container_name: twitter_server
+    volumes:
+      - .:/code
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+  client:
+    build: ./client
+    container_name: twitter_client
+    volumes:
+      - .:/client_code
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./client/.env
+    stdin_open: true
+    tty: true
+    depends_on:
+      - server
